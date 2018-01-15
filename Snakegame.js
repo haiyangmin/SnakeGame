@@ -70,20 +70,21 @@ function generateFood (){
 
 function draw(){
       drawBoard();
-      var nx = snake[3].x;
-      var ny = snake[3].y;
+      var lenth = snake.length;
+      var nx = snake[lenth-1].x;
+      var ny = snake[lenth-1].y;
   
     if(direction == "left") {
            nx--;
                 }
 else if( direction ==  "down") {
-            ny--;    
+            ny++;    
                  }
 else if( direction == "left"){
             nx++; 
         }
 else if(direction == "up") {
-            ny++;
+            ny--;
          }
 
  var head = {x:nx,y:ny};
