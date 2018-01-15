@@ -1,6 +1,22 @@
-var snake =[{x:1,y:1},{x:2,y:1},{x:3,y:1},{x:4,y:1}];
+
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+<script>
+window.onload=function() {
+    drawBoard();
+    document.addEventListener("keydown",keyPush);
+    createSnake();
+    generateFood ();
+    drawFood(food.x,food.y);
+    game;
+}
+
+var snake =[];
 var direction = "right";
 var snakeSize = 20;
+var food = {};
 
 function drawBoard(){
  canv=document.getElementById("canvas");
@@ -13,7 +29,13 @@ function drawBoard(){
     ctx.strokeRect(0, 0, w, h);
 }
 
- 
+function createSnake(){
+for (var i = 0; i < 4; i++) {
+      snake.push({x: i, y:2});
+		}
+     return snake;
+	};
+
 function drawSnake (snake){
  for (let i = 0; i < 4; i++) {
         ctx.fillStyle = 'green';
@@ -22,6 +44,7 @@ function drawSnake (snake){
         ctx.strokeRect(snake[i].x*snakeSize, snake[i].y*snakeSize, snakeSize, snakeSize);
     }
     }
+    
 function drawFood(X,Y){
         ctx.fillStyle = 'red';
         ctx.fillRect(X*snakeSize, Y*snakeSize, snakeSize, snakeSize);
@@ -45,4 +68,88 @@ function generateFood (){
         }
     }
 
+function draw(){
+      drawBoard();
+      var nx = snake[3].x;
+      var ny = snake[3].y;
+  
+    if(direction == "left") {
+           nx--;
+                }
+else if( direction ==  "down") {
+            ny--;    
+                 }
+else if( direction == "left"){
+            nx++; 
+        }
+else if(direction == "up") {
+            ny++;
+         }
+
+ var head = {x:nx,y:ny};
+ 
+if (nx == -1 || nx == 20 || ny == -1 || ny == 20 ) {
+
+        clearInterval(game);
+        return;
+    }  
+
+else if (nx == food.x && ny == food.y) {
+        //Create new food.
+        generateFood ();
+        snake.push(head);
+    }
+else {
+    var head = {x:nx,y:ny};
+      	snake.push(head);
+      snake.shift();
+  }
+
+drawSnake (snake);  
+drawFood(food.x,food.y);
+
+}
+
+var game = setInterval(draw,1000)
+
+function keyPush (event) {
+
+        keyCode = event.keyCode;
+
+        switch (keyCode) {
+
+        case 37:
+            if (direction != 'right') {
+                direction = 'left';
+            }
+            console.log('left');
+            break;
+
+        case 39:
+            if (direction != 'left') {
+                direction = 'right';
+                console.log('right');
+            }
+            break;
+
+        case 38:
+            if (direction != 'down') {
+                direction = 'up';
+                console.log('up');
+            }
+            break;
+
+        case 40:
+            if (direction != 'up') {
+                direction = 'down';
+                console.log('down');
+            }
+            break;
+        }
+    }
+
+</script>
+
+</body>
+</html>
 
