@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-<canvas id="canvas" width="400" height="400"></canvas>
+<p >Score:<span id="score" style="color:blue;font-weight:bold"></span> </p>
+<canvas id="canvas" width="400" height="500"></canvas>
 <script>
 window.onload=function() {
     drawBoard();
@@ -16,12 +17,14 @@ var snake =[];
 var direction = "right";
 var snakeSize = 20;
 var food = {};
+var ateFoodQty= 0;
+var score = 0;
 
 function drawBoard(){
  canv=document.getElementById("canvas");
     ctx=canv.getContext("2d");
     var w = 400;
-    var h = 400;
+    var h = 500;
     ctx.fillStyle = 'lightgrey';
     ctx.fillRect(0, 0, w, h);
     ctx.strokeStyle = 'black';
@@ -55,14 +58,14 @@ function drawFood(X,Y){
 function generateFood (){
           food = {
             x: Math.floor((Math.random() * 20) ),
-            y: Math.floor((Math.random() * 20) )
+            y: Math.floor((Math.random() * 25) )
         }
         for (var i=0; i<snake.length; i++) {
             var snakeX = snake[i].x;
             var snakeY = snake[i].y;     
       if (food.x===snakeX  && food.y === snakeY) {
           food.x = Math.floor((Math.random() * 20) - 1);
-          food.y = Math.floor((Math.random() * 20) - 1);
+          food.y = Math.floor((Math.random() * 25) - 1);
             }
         }
     }
@@ -74,6 +77,23 @@ function checkCollision(x, y, array) {
         } 
         return false;
     }
+function gameScore (X){
+document.getElementById("score").innerHTML = X;
+}
+
+function gameOver() {
+
+ctx.font = "30px Verdana";
+// Create gradient
+var gradient = ctx.createLinearGradient(0, 0, canv.width, 0);
+gradient.addColorStop("0", "magenta");
+gradient.addColorStop("0.5", "blue");
+gradient.addColorStop("1.0", "red");
+// Fill with gradient
+ctx.fillStyle = gradient;
+ctx.fillText("Game Over", 100, 230);
+
+}
 
 function paint(){
       drawBoard();
@@ -96,14 +116,18 @@ else if(direction == "up") {
 
  var head = {x:nx,y:ny};
  
-if (nx == -1 || nx == 20 || ny == -1 || ny == 20 || checkCollision(nx, ny, snake) ) {
+if (nx == -1 || nx == 20 || ny == -1 || ny == 25 || checkCollision(nx, ny, snake) ) {
 
         clearInterval(game);
+        gameOver();
         return;
     }  
 
 else if (nx == food.x && ny == food.y) {
         //Create new food.
+        ateFoodQty++;
+        score = ateFoodQty * 10;
+        gameScore (score);
         generateFood ();
         snake.push(head);
     }
