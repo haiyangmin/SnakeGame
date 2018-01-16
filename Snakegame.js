@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+ body {
+	background-color: #E0E4CC;
+	font-family: 'Montserrat', sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+</style>
+</head>
 <body>
 <p >Score:<span id="score" style="color:blue;font-weight:bold"></span> </p>
+
+
 <canvas id="canvas" width="400" height="500"></canvas>
 <script>
-window.onload=function() {
+
+window.addEventListener('load', gameStart);
+
+function gameStart() {
     drawBoard();
     document.addEventListener("keydown",keyPush);
     createSnake();
@@ -12,6 +28,7 @@ window.onload=function() {
     drawFood(food.x,food.y);
     game;
 }
+
 
 var snake =[];
 var direction = "right";
@@ -182,4 +199,3 @@ function keyPush (event) {
 </script>
 </body>
 </html>
-
