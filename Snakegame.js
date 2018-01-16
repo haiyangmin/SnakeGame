@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <body>
@@ -37,7 +36,7 @@ for (var i = 0; i < 4; i++) {
 	};
 
 function drawSnake (snake){
- for (let i = 0; i < 4; i++) {
+ for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = 'green';
         ctx.fillRect(snake[i].x*snakeSize, snake[i].y*snakeSize, snakeSize, snakeSize);
         ctx.strokeStyle = 'darkgreen';
@@ -67,8 +66,16 @@ function generateFood (){
             }
         }
     }
+    
+function checkCollision(x, y, array) {
+        for(var i = 0; i < array.length; i++) {
+            if(array[i].x === x && array[i].y === y)
+            return true;
+        } 
+        return false;
+    }
 
-function draw(){
+function paint(){
       drawBoard();
       var lenth = snake.length;
       var nx = snake[lenth-1].x;
@@ -80,7 +87,7 @@ function draw(){
 else if( direction ==  "down") {
             ny++;    
                  }
-else if( direction == "left"){
+else if( direction == "right"){
             nx++; 
         }
 else if(direction == "up") {
@@ -89,7 +96,7 @@ else if(direction == "up") {
 
  var head = {x:nx,y:ny};
  
-if (nx == -1 || nx == 20 || ny == -1 || ny == 20 ) {
+if (nx == -1 || nx == 20 || ny == -1 || ny == 20 || checkCollision(nx, ny, snake) ) {
 
         clearInterval(game);
         return;
@@ -101,7 +108,7 @@ else if (nx == food.x && ny == food.y) {
         snake.push(head);
     }
 else {
-    var head = {x:nx,y:ny};
+    //var head = {x:nx,y:ny};
       	snake.push(head);
       snake.shift();
   }
@@ -111,7 +118,7 @@ drawFood(food.x,food.y);
 
 }
 
-var game = setInterval(draw,1000)
+var game = setInterval(paint,1000/5)
 
 function keyPush (event) {
 
@@ -148,9 +155,7 @@ function keyPush (event) {
             break;
         }
     }
-
 </script>
-
 </body>
 </html>
 
