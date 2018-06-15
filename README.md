@@ -1,2 +1,2 @@
 # SnakeGame
-Created a snake game by javascript, html canvas, CSS.
+Created a snake game using javascript, html canvas, CSS.
